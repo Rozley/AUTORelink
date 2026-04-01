@@ -74,7 +74,7 @@ python setup_autostart.py remove      # 移除开机自启动
 
 ## 运行截图
 
-<!-- 截图待添加 -->
+![运行截图](screenshot.png)
 
 ## 项目结构
 
