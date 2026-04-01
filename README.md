@@ -72,34 +72,9 @@ python setup_autostart.py status     # 查看状态
 python setup_autostart.py remove      # 移除开机自启动
 ```
 
-## 工作原理
+## 运行截图
 
-```
-检测网络 ──> 断开？ ──> 获取 Challenge Token
-                        │
-                        v
-                   加密密码 (HMAC-MD5)
-                        │
-                        v
-                   加密登录信息 (x_encode + 自定义 Base64)
-                        │
-                        v
-                   发送认证请求到 /cgi-bin/srun_portal
-                        │
-                        v
-                   成功？ ──> 继续监控
-```
-
-### x_encode 算法
-
-x_encode 是 Srun4000 认证使用的 TEA-like 分组密码，由 JavaScript 版本移植而来，包含以下关键修复：
-
-- 无符号右移操作符 (`>>>`) 的正确模拟
-- JavaScript 与 Python 运算符优先级差异处理
-- Latin1 字符编码确保二进制数据不损坏
-- 与浏览器一致的自定义 Base64 字母表
-
-详见 [x_encode.py](x_encode.py) 源码注释。
+<!-- 截图待添加 -->
 
 ## 项目结构
 
@@ -108,7 +83,6 @@ AUTORelink/
 ├── main.py              # 主程序入口，监控循环
 ├── campus_net.py        # Srun 认证核心逻辑
 ├── detector.py          # 网络状态检测
-├── x_encode.py          # 加密算法实现
 ├── config.py            # 配置文件
 ├── setup_autostart.py   # 开机自启动设置脚本
 └── requirements.txt     # 依赖
