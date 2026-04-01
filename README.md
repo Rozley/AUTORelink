@@ -96,7 +96,7 @@ AUTORelink/
 | `PASSWORD` | 校园网密码 | 必填 |
 | `AC_ID` | 接入控制 ID | 必填（需手动获取）|
 | `AUTH_SERVER` | 认证服务器，设为 `None` 自动检测 | `None` |
-| `CHECK_INTERVAL` | 网络检测间隔（秒） | `30` |
+| `CHECK_INTERVAL` | 网络检测间隔（秒） | `10` |
 | `LOG_FILE` | 日志文件路径 | `campus_net.log` |
 | `LOG_LEVEL` | 日志级别 | `INFO` |
 
