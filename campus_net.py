@@ -199,48 +199,6 @@ class CampusNetLogin:
         pattern = r"^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}$"
         return bool(re.match(pattern, ip))
 
-    def detect_server_config(self) -> tuple[Optional[str], Optional[str]]:
-        """
-        从重定向获取认证服务器和 AC_ID
-
-        Returns:
-            (auth_server, ac_id) 元组，失败返回 (None, None)
-        """
-        try:
-            # 使用不带 cookie 的干净 session 检测（不登录状态下的重定向）
-            import requests
-            clean_session = requests.Session()
-            clean_session.headers.update({
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            })
-
-            # 访问 login.tsinghua.edu.cn，强制触发重定向到认证服务器
-            response = clean_session.get(
-                "http://login.tsinghua.edu.cn/",
-                timeout=10,
-                allow_redirects=True
-            )
-
-            final_url = response.url
-            print(f"重定向后 URL: {final_url}")
-
-            # 从 URL 中提取 auth_server 和 ac_id
-            # 格式: https://auth4.tsinghua.edu.cn/srun_portal_pc?ac_id=222&...
-            auth_match = re.search(r'https?://([^/]+)/', final_url)
-            ac_id_match = re.search(r'ac_id=(\d+)', final_url)
-
-            auth_server = auth_match.group(1) if auth_match else None
-            ac_id = ac_id_match.group(1) if ac_id_match else None
-
-            if auth_server and ac_id:
-                print(f"自动检测: auth_server={auth_server}, ac_id={ac_id}")
-                return auth_server, ac_id
-
-        except Exception as e:
-            print(f"自动检测服务器配置失败: {e}")
-
-        return None, None
-
     def get_challenge(self, username: str, ip: str, auth_server: str = None) -> Optional[str]:
         """
         从认证服务器获取挑战字符串
@@ -448,13 +406,6 @@ class CampusNetLogin:
         if configured_server:
             # 如果手动指定了服务器，优先使用它
             auth_servers = [configured_server] + [s for s in auth_servers if s != configured_server]
-
-        # 尝试自动检测
-        print("正在自动检测服务器配置...")
-        detected_server, detected_ac_id = self.detect_server_config()
-        if detected_server:
-            # 将检测到的服务器放到最优先位置
-            auth_servers = [detected_server] + [s for s in auth_servers if s != detected_server]
 
         # ac_id 必须配置
         default_ac_id = getattr(config, 'AC_ID', None)

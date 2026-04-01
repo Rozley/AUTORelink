@@ -50,8 +50,6 @@ AC_ID 需要手动获取（每位用户可能不同）：
    AC_ID = "222"
    ```
 
-也可以运行 `python test_ac_id.py` 自动检测。
-
 ### 4. 运行
 
 **命令行模式：**
@@ -113,7 +111,6 @@ AUTORelink/
 ├── x_encode.py          # 加密算法实现
 ├── config.py            # 配置文件
 ├── setup_autostart.py   # 开机自启动设置脚本
-├── test_ac_id.py        # AC_ID 检测工具
 └── requirements.txt     # 依赖
 ```
 

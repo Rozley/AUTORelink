@@ -2,6 +2,7 @@
 myconfig.py
 config.py.local
 *.local.py
+CLAUDE.md
 
 # 日志
 *.log
