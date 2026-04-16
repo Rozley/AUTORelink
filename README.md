@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ### 2. 配置账号
 
-编辑 `config.py`，填入你的校园网用户名和密码：
+将 `config_template.py` 重命名为 `config.py`，然后编辑填入你的校园网用户名和密码：
 
 ```python
 USERNAME = "your-username"
