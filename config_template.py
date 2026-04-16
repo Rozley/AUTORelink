@@ -4,9 +4,9 @@
 
 # ==================== 登录信息 ====================
 # 校园网用户名
-USERNAME = "li-xh23"
+USERNAME = "your_username_here"
 # 校园网密码
-PASSWORD = "#Asdl1029384756"
+PASSWORD = "your_password_here"
 
 # ==================== 服务器配置 ====================
 # 认证服务器（支持 auth4/auth6）- 可自动检测
@@ -20,7 +20,7 @@ AUTH_SERVER = None
 # ac_id - 接入控制ID（必填）
 # 请在浏览器中访问 login.tsinghua.edu.cn，从重定向后的 URL 中获取
 # 例如: https://auth4.tsinghua.edu.cn/srun_portal_pc?ac_id=222
-AC_ID = "171"
+AC_ID = "your_ac_id_here"
 
 # ==================== 网络检测配置 ====================
 # 检测间隔（秒）

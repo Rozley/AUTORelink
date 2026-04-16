@@ -8,6 +8,7 @@
 
 import sys
 import os
+import subprocess
 
 # 确保当前目录在 Python 路径中
 _script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -22,6 +23,26 @@ from typing import Optional
 import config
 import campus_net
 import detector
+
+
+def disable_proxy():
+    """关闭系统代理/VPN，确保认证请求直连校园网"""
+    try:
+        # 重置 WinHTTP 代理设置
+        subprocess.run(
+            ["netsh", "winhttp", "reset", "proxy"],
+            capture_output=True,
+            timeout=10
+        )
+        # 关闭 Windows 代理设置
+        subprocess.run(
+            ["netsh", "interface", "set", "proxy", "disable"],
+            capture_output=True,
+            timeout=10
+        )
+        print(f"[{datetime.now()}] 已关闭代理/VPN")
+    except Exception as e:
+        print(f"[{datetime.now()}] 关闭代理失败: {e}")
 
 # 配置日志
 logging.basicConfig(
@@ -88,6 +109,9 @@ class CampusNetReconnect:
     def on_network_disconnected(self):
         """网络断开时的处理"""
         print(f"[{datetime.now()}] 检测到网络断开，正在尝试重连...")
+
+        # 关闭代理后再尝试重连
+        disable_proxy()
 
         # 多次重试
         for attempt in range(1, self.max_consecutive_failures + 1):
