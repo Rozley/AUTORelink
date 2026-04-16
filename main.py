@@ -8,7 +8,6 @@
 
 import sys
 import os
-import subprocess
 
 # 确保当前目录在 Python 路径中
 _script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -28,18 +27,8 @@ import detector
 def disable_proxy():
     """关闭系统代理/VPN，确保认证请求直连校园网"""
     try:
-        # 重置 WinHTTP 代理设置
-        subprocess.run(
-            ["netsh", "winhttp", "reset", "proxy"],
-            capture_output=True,
-            timeout=10
-        )
-        # 关闭 Windows 代理设置
-        subprocess.run(
-            ["netsh", "interface", "set", "proxy", "disable"],
-            capture_output=True,
-            timeout=10
-        )
+        import sysproxy
+        sysproxy.off()  # 关闭代理
         print(f"[{datetime.now()}] 已关闭代理/VPN")
     except Exception as e:
         print(f"[{datetime.now()}] 关闭代理失败: {e}")
